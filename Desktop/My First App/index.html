@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Landing Page</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Header Section -->
+    <header>
+        <nav>
+            <ul>
+                <li class="dropdown">
+                    <a href="#" class="dropbtn">Home</a>
+                    <div class="dropdown-content">
+                        <a href="#">Car Sales & Services</a>
+                        <a href="#">Paperworks</a>
+                        <a href="#">Remodel</a>
+                    </div>
+                </li>
+                <li class="dropdown">
+                    <a href="#" class="dropbtn">About</a>
+                    <div class="dropdown-content">
+                        <a href="#">Our Team</a>
+                        <a href="#">Our History</a>
+                        <a href="#">Mission</a>
+                    </div>
+                </li>
+                <li class="dropdown">
+                    <a href="#" class="dropbtn">Services</a>
+                    <div class="dropdown-content">
+                        <a href="#">Dealership</a>
+                        <a href="#">SEO</a>
+                        <a href="#">Consulting</a>
+                    </div>
+                </li>
+                <li class="dropdown">
+                    <a href="#" class="dropbtn">Contact</a>
+                    <div class="dropdown-content">
+                        <a href="#">Email Us</a>
+                        <a href="#">Call Us</a>
+                        <a href="#">Visit Us</a>
+                    </div>
+                </li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <img src="The Cars.jpg" alt="Hero Image">
+        <div class="hero-text">
+            <h1>Welcome to CarCraze</h1>
+            <p>Your success starts here</p>
+            <a href="#services" class="cta-button">Explore Services</a>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about">
+        <h2>About Us</h2>
+        <div class="about-content">
+            <div class="about-text">
+                <p>We are a team of dedicated professionals committed to delivering top-notch services. Our expertise are responsible for many aspects of the vehicle sales process which includes arranging for test drives and matching customers with the right vehicles. We focus on providing solutions that empower businesses to succeed in the digital age.</p>
+                <p>At the heart of our work is a passion for innovation and a drive to make a difference for our customers.</p>
+                <a href="#services" class="learn-more-button">Learn More</a>
+            </div>
+            <div class="slider-container">
+                <div class="slider">
+                    <img src="About Us 1.jpg" alt="Teamwork Image">
+                    <img src="About Us.jpg" alt="Innovation Image">
+                    <img src="About Us 2.jpg" alt="Client Interaction Image">
+                </div>
+                <button class="prev" addEventListener="prevSlide()">&#10094;</button>
+                <button class="next" addEventListener="nextSlide()">&#10095;</button>
+            </div>
+        </div>
+    </section>
+    
+    
+
+    <!-- Services Section -->
+    <section id="services">
+        <h2>Our Services</h2>
+        <div class="service-cards">
+            <div class="service-card">
+                <img src="Dealership.jpeg" alt="Dealership">
+                <h3>Dealership</h3>
+                <p>An establishment authorized to buy and sell specific goods, especially motor vehicles.
+                    "his family owns a car dealership".</p>
+            </div>
+            <div class="service-card">
+                <img src="service 3.jpg" alt="SEO">
+                <h3>SEO</h3>
+                <p>"With modern vehicles, ECU remapping or tuning is a popular method of optimization, where the vehicle’s engine management software is adjusted to improve performance, fuel economy, or power delivery based on the driver's preference.".</p>
+            </div>
+            <div class="service-card">
+                <img src="service 2.jpg" alt="Consulting">
+                <h3>Consulting</h3>
+                <p>A service in which consultants assist auto dealers and manufacturers in enhancing business effectiveness, boosting sales, and reducing costs.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer Section -->
+<footer style="background-color: #333; color: #fff; text-align: center; padding: 20px 0;">
+    <p>&copy; 2024 CarCraze. All Rights Reserved.</p>
+</footer>
+
+    <!-- Your content above -->
+<script src="script.js"></script>  <!-- Link to your JavaScript file here -->
+</body>
+</html>
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+    let currentSlide = 0;
+
+    function showSlide(index) {
+        const slides = document.querySelector('.slider');
+        const totalSlides = slides.children.length;
+
+        if (index >= totalSlides) currentSlide = 0;
+        else if (index < 0) currentSlide = totalSlides - 1;
+        else currentSlide = index;
+
+        slides.style.transform = `translateX(-${currentSlide * 100}%)`;
+    }
+
+    function nextSlide() {
+        showSlide(currentSlide + 1);
+    }
+
+    function prevSlide() {
+        showSlide(currentSlide - 1);
+    }
+
+    // Attach event listeners after the DOM is ready
+    document.querySelector('.next').addEventListener('click', nextSlide);
+    document.querySelector('.prev').addEventListener('click', prevSlide);
+});
+</script>
+</body>
+</html>
