@@ -2,28 +2,30 @@ import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import ProductList from './components/ProductList';
-import CartView from './components/CartView.jsx';
 import Modal from './components/Modal';
+import CartModal from './components/CartModal';
 
 const App = () => {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [fetchError, setFetchError] = useState("");
+  const [fetchError, setFetchError] = useState('');
 
   const [cartItems, setCartItems] = useState([]);
-  const [searchTerm, setSearchTerm] = useState(""); // 🔍 Added for search
+  const [searchTerm, setSearchTerm] = useState('');
 
   const [showModal, setShowModal] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState(null);
 
+  const [isCartOpen, setIsCartOpen] = useState(false);
+
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const response = await fetch("https://fakestoreapi.com/products");
+        const response = await fetch('https://fakestoreapi.com/products');
         const data = await response.json();
         setProducts(data);
       } catch (error) {
-        setFetchError("Failed to fetch products");
+        setFetchError('Failed to fetch products');
       } finally {
         setLoading(false);
       }
@@ -32,13 +34,14 @@ const App = () => {
   }, []);
 
   const handleAddToCart = (product) => {
-    setSelectedProduct(product);
-    setShowModal(true);
-
     const exists = cartItems.find((item) => item.id === product.id);
     if (exists) {
-      alert("Item already added to the cart");
+      alert('This item is already in your cart!');
+      return;
     }
+
+    setSelectedProduct(product);
+    setShowModal(true);
   };
 
   const handleConfirmAddToCart = () => {
@@ -53,7 +56,6 @@ const App = () => {
   const handleRemoveFromCart = (productId) => {
     const updatedCart = cartItems.filter((item) => item.id !== productId);
     setCartItems(updatedCart);
-    setShowModal(false);
   };
 
   return (
@@ -63,15 +65,25 @@ const App = () => {
           cartCount={cartItems.reduce((total, item) => total + item.quantity, 0)}
           searchTerm={searchTerm}
           setSearchTerm={setSearchTerm}
+          setIsCartOpen={setIsCartOpen}
         />
 
+        {/* Add-to-cart confirmation modal */}
         {showModal && (
           <Modal
             product={selectedProduct}
             onConfirm={handleConfirmAddToCart}
             onCancel={handleCancelAddToCart}
-            onRemoveFromCart={handleRemoveFromCart}
             cartItems={cartItems}
+          />
+        )}
+
+        {/* Cart modal */}
+        {isCartOpen && (
+          <CartModal
+            cartItems={cartItems}
+            onClose={() => setIsCartOpen(false)}
+            onRemove={handleRemoveFromCart}
           />
         )}
 
@@ -89,7 +101,6 @@ const App = () => {
                 />
               }
             />
-            <Route path="/cart" element={<CartView cartItems={cartItems} />} />
           </Routes>
         </main>
       </div>

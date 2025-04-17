@@ -1,70 +1,59 @@
 import React from 'react';
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-  DialogFooter,
-} from '@/components/ui/dialog';
 
 const CartModal = ({ cartItems, onClose, onRemove }) => {
   return (
-    <Dialog open={true} onOpenChange={onClose}>
-      <DialogContent>
-        <DialogHeader>
-          <DialogTitle>Your Cart</DialogTitle>
-          <DialogDescription>
-            {cartItems.length === 0
-              ? "Your cart is empty."
-              : "Review your items before proceeding to checkout."}
-          </DialogDescription>
-        </DialogHeader>
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-40">
+      <div className="bg-white w-full max-w-md rounded-lg shadow-lg p-6 relative">
+        <h2 className="text-xl font-bold mb-2">🛒 Your Cart</h2>
+        <p className="text-sm text-gray-500 mb-4">
+          {cartItems.length === 0
+            ? 'Your cart is empty.'
+            : 'Review your items before checkout.'}
+        </p>
 
-        {cartItems.length === 0 ? (
-          <p className="text-gray-500 text-center">Your cart is empty.</p>
-        ) : (
-          cartItems.map((item) => (
-            <div
-              key={item.id}
-              className="flex items-center justify-between border-b py-3"
-            >
-              <div className="flex items-center gap-4">
-                <img
-                  src={item.image}
-                  alt={item.title}
-                  className="h-12 w-12 object-contain"
-                />
-                <div>
-                  <h3 className="text-sm font-semibold">{item.title}</h3>
-                  <p className="text-blue-600 font-bold">${item.price}</p>
+        <div className="max-h-64 overflow-y-auto space-y-4">
+          {cartItems.length === 0 ? (
+            <p className="text-center text-gray-400">Nothing here yet...</p>
+          ) : (
+            cartItems.map((item) => (
+              <div key={item.id} className="flex items-center justify-between border-b pb-2">
+                <div className="flex items-center gap-3">
+                  <img
+                    src={item.image}
+                    alt={item.title}
+                    className="w-10 h-10 object-contain"
+                  />
+                  <div>
+                    <p className="text-sm font-medium">{item.title}</p>
+                    <p className="text-blue-600 text-sm font-semibold">${item.price}</p>
+                  </div>
                 </div>
+                <button
+                  onClick={() => onRemove(item.id)}
+                  className="text-red-500 hover:text-red-700 text-sm"
+                >
+                  Remove
+                </button>
               </div>
-              <button
-                onClick={() => onRemove(item.id)}
-                className="text-red-500 hover:underline text-sm"
-              >
-                Remove
-              </button>
-            </div>
-          ))
-        )}
+            ))
+          )}
+        </div>
 
-        <DialogFooter>
+        <div className="mt-6 flex justify-end gap-4">
           <button
             onClick={onClose}
-            className="bg-gray-200 px-4 py-2 rounded hover:bg-gray-300"
+            className="px-4 py-2 bg-gray-200 text-gray-800 rounded hover:bg-gray-300"
           >
             Close
           </button>
           <button
-            className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
+            className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
           >
             Checkout
           </button>
-        </DialogFooter>
-      </DialogContent>
-    </Dialog>
+        </div>
+      </div>
+    </div>
   );
 };
 
