@@ -35,13 +35,20 @@ const App = () => {
 
   const handleAddToCart = (product) => {
     const exists = cartItems.find((item) => item.id === product.id);
-    if (exists) {
-      alert('This item is already in your cart!');
-      return;
-    }
 
-    setSelectedProduct(product);
-    setShowModal(true);
+    if (exists) {
+      // Increase quantity if item already in cart
+      const updatedCart = cartItems.map((item) =>
+        item.id === product.id
+          ? { ...item, quantity: item.quantity + 1 }
+          : item
+      );
+      setCartItems(updatedCart);
+    } else {
+      // Open confirmation modal for new product
+      setSelectedProduct(product);
+      setShowModal(true);
+    }
   };
 
   const handleConfirmAddToCart = () => {

@@ -1,6 +1,11 @@
 import React from 'react';
 
 const CartModal = ({ cartItems, onClose, onRemove }) => {
+  const grandTotal = cartItems.reduce(
+    (sum, item) => sum + item.price * item.quantity,
+    0
+  );
+
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-40">
       <div className="bg-white w-full max-w-md rounded-lg shadow-lg p-6 relative">
@@ -25,7 +30,11 @@ const CartModal = ({ cartItems, onClose, onRemove }) => {
                   />
                   <div>
                     <p className="text-sm font-medium">{item.title}</p>
-                    <p className="text-blue-600 text-sm font-semibold">${item.price}</p>
+                    <p className="text-blue-600 text-sm font-semibold">
+                      ${item.price} × {item.quantity} = ${(
+                        item.price * item.quantity
+                      ).toFixed(2)}
+                    </p>
                   </div>
                 </div>
                 <button
@@ -38,6 +47,12 @@ const CartModal = ({ cartItems, onClose, onRemove }) => {
             ))
           )}
         </div>
+
+        {cartItems.length > 0 && (
+          <div className="mt-4 text-right font-semibold">
+            Grand Total: ${grandTotal.toFixed(2)}
+          </div>
+        )}
 
         <div className="mt-6 flex justify-end gap-4">
           <button
