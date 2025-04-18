@@ -1,12 +1,9 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 
-export default function Navbar({ cartCount = 0, searchTerm, setSearchTerm }) {
+export default function Navbar({ cartCount = 0, searchTerm, setSearchTerm, setIsCartOpen }) {
   return (
     <nav className="bg-white shadow-md px-6 py-4 flex justify-between items-center">
-      <Link to="/" className="text-xl font-bold text-blue-600">
-        MyCartApp
-      </Link>
+      <h1 className="text-xl font-bold text-blue-600">MyCartApp</h1>
 
       <input
         type="text"
@@ -16,8 +13,8 @@ export default function Navbar({ cartCount = 0, searchTerm, setSearchTerm }) {
         className="px-3 py-1 border border-gray-300 rounded-md mr-4 w-48"
       />
 
-      <Link
-        to="/cart"
+      <button
+        onClick={() => setIsCartOpen(true)}
         className="relative flex items-center text-gray-700 hover:text-blue-600"
       >
         🛒
@@ -28,7 +25,7 @@ export default function Navbar({ cartCount = 0, searchTerm, setSearchTerm }) {
             {cartCount}
           </span>
         )}
-      </Link>
+      </button>
     </nav>
   );
 }

@@ -68,7 +68,6 @@ const App = () => {
           setIsCartOpen={setIsCartOpen}
         />
 
-        {/* Add-to-cart confirmation modal */}
         {showModal && (
           <Modal
             product={selectedProduct}
@@ -78,7 +77,6 @@ const App = () => {
           />
         )}
 
-        {/* Cart modal */}
         {isCartOpen && (
           <CartModal
             cartItems={cartItems}
@@ -101,6 +99,7 @@ const App = () => {
                 />
               }
             />
+            <Route path="*" element={<p className="text-center text-gray-400">404 - Page not found</p>} />
           </Routes>
         </main>
       </div>
